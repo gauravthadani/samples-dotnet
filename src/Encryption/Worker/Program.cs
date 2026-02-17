@@ -6,9 +6,11 @@ using TemporalioSamples.Encryption.Codec;
 using TemporalioSamples.Encryption.Worker;
 
 // Create a client to localhost on default namespace
+var dataConverter = DataConverter.Default with { PayloadCodec = new EncryptionCodec() };
 var client = await TemporalClient.ConnectAsync(new("localhost:7233")
 {
-    DataConverter = DataConverter.Default with { PayloadCodec = new EncryptionCodec() },
+    DataConverter = dataConverter,
+    Interceptors = new[] { new ContextPropagationInterceptor<string?>(MyContext.UserIdLocal, DataConverter.Default.PayloadConverter), },
     LoggerFactory = LoggerFactory.Create(builder =>
         builder.
             AddSimpleConsole(options => options.TimestampFormat = "[HH:mm:ss] ").
@@ -25,13 +27,16 @@ Console.CancelKeyPress += (_, eventArgs) =>
 
 // Run worker until cancelled
 Console.WriteLine("Running worker");
+var activity = new GreetingWorkflow();
 using var worker = new TemporalWorker(
     client,
     new TemporalWorkerOptions(taskQueue: "encryption-sample").
+        AddActivity(activity.RunActivityAsync).
         AddWorkflow<GreetingWorkflow>());
 try
 {
     await worker.ExecuteAsync(tokenSource.Token);
+    // await worker.ExecuteAsync();
 }
 catch (OperationCanceledException)
 {

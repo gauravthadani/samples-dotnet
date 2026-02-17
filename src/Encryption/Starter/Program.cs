@@ -13,10 +13,13 @@ connectOptions.LoggerFactory = LoggerFactory.Create(builder =>
     builder.
         AddSimpleConsole(options => options.TimestampFormat = "[HH:mm:ss] ").
         SetMinimumLevel(LogLevel.Information));
+connectOptions.Interceptors = new[] { new ContextPropagationInterceptor<string?>(MyContext.UserIdLocal, DataConverter.Default.PayloadConverter), };
 var client = await TemporalClient.ConnectAsync(connectOptions);
+
+MyContext.UserId = "GauravThadani";
 
 // Run workflow
 var result = await client.ExecuteWorkflowAsync(
     (GreetingWorkflow wf) => wf.RunAsync("Temporal"),
-    new(id: "encryption-workflow-id", taskQueue: "encryption-sample"));
+    new(id: "encryption-workflow-id-1", taskQueue: "encryption-sample"));
 Console.WriteLine("Workflow result: {0}", result);
