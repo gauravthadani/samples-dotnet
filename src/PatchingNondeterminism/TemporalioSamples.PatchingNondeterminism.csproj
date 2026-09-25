@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <!--
+    Pinned to Temporalio 1.15.0 for this sample so we can reproduce the customer's
+    exact SDK version. Other samples in the solution stay on the centrally-managed
+    version (Directory.Packages.props).
+  -->
+  <!-- <ItemGroup>
+    <PackageReference Update="Temporalio" VersionOverride="1.15.0" />
+    <PackageReference Update="Temporalio.Extensions.DiagnosticSource" VersionOverride="1.15.0" />
+    <PackageReference Update="Temporalio.Extensions.Hosting" VersionOverride="1.15.0" />
+    <PackageReference Update="Temporalio.Extensions.OpenTelemetry" VersionOverride="1.15.0" />
+  </ItemGroup> -->
+
+</Project>
