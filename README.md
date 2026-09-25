@@ -38,6 +38,7 @@ Prerequisites:
 * [NexusStandaloneActivity](src/NexusStandaloneActivity) - Nexus Operation backed by a Standalone Activity.
 * [OpenTelemetry](src/OpenTelemetry) - Demonstrates how to set up OpenTelemetry tracing and metrics for both the client and worker, using both the .NET metrics API and internal forwarding from the Core SDK. Also shows how to forward internal Core SDK logs to an `ILogger`.
 * [Patching](src/Patching) - Alter workflows safely with Patch and DeprecatePatch.
+* [PatchingNondeterminism](src/PatchingNondeterminism) - Reproduces the `[TMPRL1100] Non-deprecated patch marker` NDE that occurs when `Workflow.Patched` is introduced without preserving the pre-patch branch for in-flight workflows.
 * [Polling](src/Polling) - Recommended implementation of an activity that needs to periodically poll an external resource waiting its successful completion.
 * [SafeMessageHandlers](src/SafeMessageHandlers) - Use `Semaphore` to ensure operations are atomically processed in a workflow.
 * [Saga](src/Saga) - Demonstrates how to implement a saga pattern.

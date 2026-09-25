@@ -28,6 +28,7 @@ async Task RunWorkerAsync()
         .AddActivity(Activities.WithdrawBrokerRejectionEmail)
         .AddWorkflow<MyWorkflowV1Unpatched>();
 
+    workerOptions.MaxCachedWorkflows = 0;
     Console.WriteLine("Running worker");
     using var worker = new TemporalWorker(client, workerOptions);
 
